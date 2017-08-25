@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DSF</title>
+	<script type="text/javascript" src="//cdn.webix.com/edge/webix.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/edge/webix.css">
+	<style type="text/css">
+		.webix_drop_file {
+			background: #fd8;
+		}
+		.webix_drop_file:before{
+			bottom:auto;
+			top:46%;
+			pointer-events: none;
+		}
+		.name_part{
+			display:inline-block; 
+			width: 200px;
+		}
+		.progress_part{
+			display: inline-block;
+			margin-left:23px;
+			width: 200px;
+
+		}
+		.card{
+			margin:18px 50px 2px 50px;
+			padding: 10px 20px 10px 20px;
+			border: 1px solid #ddd;
+			background: #f8f8f8;
+			box-shadow: 5px 5px 5px silver;
+			border-radius: 3px;
+		}
+		.webix_list_item{
+			border-bottom: 0px solid red;
+			padding:0;
+			outline: none !important;
+			cursor: default;
+		}
+		button{
+			border: 1px solid #ddd;
+			padding: 2px 10px;
+			border-radius: 8px;
+			cursor: pointer;
+			background: #ddd;
+			color: #444;
+			margin-right: 10px;
+		}
+		button:hover{
+			background: #d8d8d8;
+			color: #000;
+		}
+		button:active{
+			background: #eee;
+			color: #000;
+		}
+		.server .progress_part{
+			display:none;
+		}
+		.client .href_part{
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		function fileType(type){
+			type = (type || "").toLowerCase();
+
+			switch(type){
+				case "html":
+				case "htm":
+				case "js":
+				case "css":
+				case "ts":
+				case "less":
+				case "cs":
+				case "php":
+				case "java":
+					return "file-code-o";
+
+				case "zip":
+				case "rar":
+				case "z7":
+					return "file-archive-o";
+
+				case "jpg":
+				case "png":
+				case "gif":
+				case "jpeg":
+					return "file-archive-o";
+
+				default:
+					return "file-o";
+			}
+		}
+
+		function toClipboard(node){
+			node = node.nextSibling;
+
+			var range = document.createRange();
+			range.selectNode(node);
+			window.getSelection().removeAllRanges();
+			window.getSelection().addRange(range);
+			document.execCommand('copy');
+		}
+
+		var header = { view:"toolbar", cols:[
+			{ view:"label", label:"Dead Simple File Storage", height:40 },
+			{
+				view:"uploader", id:"files", value:"Add File", width:150, upload:"/upload"
+			}
+		]};
+		var body = {
+			view:"list", id:"list", data:[],
+			onClick:{
+				"clipboard":function(ev, id, node){
+					toClipboard(node);
+				}
+			},
+			type:{
+				height:105,
+				template:`
+			<div class='card'>
+				<div><span class='webix_icon fa-#icon#'>&nbsp;</span> <b class='name_part'>#name#</b><span class='size_part'>#size#</span></div>
+				<div class='#status#'><span class='progress_part'>Uploading: #percent#%</span><span class='href_part'><button class='clipboard'>To clipboard</button>#href#</span></div>
+			</div>
+			` }
+		};
+		webix.ui({
+			rows:[ header, body ]
+		});
+
+		$$("files").addDropZone($$("list").$view);
+		$$("files").attachEvent("onAfterFileAdd", function(file){
+			$$("list").hideOverlay();
+			$$("list").add({
+				id:   file.id,
+				name: file.name,
+				size: file.sizetext,
+				icon: fileType(file.type),
+				percent: 0,
+				href:"",
+				status:"client"
+			});
+		 });
+		$$("files").attachEvent("onFileUpload", function(file){
+			var path = location.protocol+"//"+location.host+file.path;
+			$$("list").updateItem(file.id, {
+				href:"<a target='blank' href='"+path+"'>"+path+"</a>",
+				status:"server"
+			});
+			webix.delay(function(){
+				this.files.remove(file.id);
+			}, this);
+		});
+
+		$$("files").files.data.attachEvent("onDataUpdate", function(id, data){
+			$$("list").updateItem(id, { percent: data.percent });
+		});
+
+		 webix.extend($$("list"), webix.OverlayBox);
+		 if (!$$("list").count())
+			$$("list").showOverlay("<div style='pointer-events: none; width:100%; position:absolute; top:50%; font-size:40px; margin-top: -40px;'>Drop File Here</div>");
+
+
+	</script>
+</body>
+</html>

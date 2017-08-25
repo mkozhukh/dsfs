@@ -1,0 +1,12 @@
+version: "3"
+services:
+  worker:
+    image: mkozhukh/dsfs
+    ports:
+      - 8040:8040
+    volumes:
+      - ./config.yml:/config.yml:ro
+      - webix-dsfs:/data
+
+volumes:
+  webix-dsfs:

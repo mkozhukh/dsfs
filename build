@@ -1,0 +1,7 @@
+#!/bin/bash
+set -e
+mkdir -p ./dist/linux
+
+go-bindata static/...
+env GOOS=linux GOARCH=amd64 go build -o dist/linux/dsfs
+docker build --tag mkozhukh/dsfs .
