@@ -4,4 +4,7 @@ mkdir -p ./dist/linux
 
 go-bindata static/...
 env GOOS=linux GOARCH=amd64 go build -o dist/linux/dsfs
+cp build/Dockerfile ./
 docker build --tag mkozhukh/dsfs .
+rm Dockerfile
+docker push mkozhukh/dsfs

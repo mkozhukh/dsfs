@@ -1,1 +1,2 @@
+#!/bins/bash
 CompileDaemon -command=./dsfs -color

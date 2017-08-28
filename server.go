@@ -4,19 +4,18 @@ import (
 	"crypto/md5"
 	"fmt"
 	"io"
-	"mkozhukh/dsfs/auth"
-	"mkozhukh/dsfs/config"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"time"
 
-	log "github.com/sirupsen/logrus"
-	"github.com/unrolled/render"
-
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/mkozhukh/dsfs/auth"
+	"github.com/mkozhukh/dsfs/config"
+	log "github.com/sirupsen/logrus"
+	"github.com/unrolled/render"
 )
 
 type contextKey int

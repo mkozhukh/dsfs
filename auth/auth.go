@@ -6,15 +6,13 @@ import (
 	"net/http"
 	"strings"
 
-	"mkozhukh/dsfs/config"
-
 	"github.com/alexedwards/scs/session"
-	log "github.com/sirupsen/logrus"
-	"github.com/unrolled/render"
-
 	"github.com/go-chi/chi"
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/providers/gplus"
+	"github.com/mkozhukh/dsfs/config"
+	log "github.com/sirupsen/logrus"
+	"github.com/unrolled/render"
 )
 
 //AccessType is an enumeration of possible access levels
