@@ -73,13 +73,3 @@ func (u uploadHandler) retrieve(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, filePath)
 	log.Printf("File requested: %s", name)
 }
-
-func initUpload(r chi.Router, render *render.Render) {
-	handler := uploadHandler{}
-
-	//store file
-	r.Post("/upload", handler.upload)
-
-	//serve uploaded files
-	r.Get("/"+Config.Path+"/{file}/{realname}", handler.retrieve)
-}

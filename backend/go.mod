@@ -1,4 +1,4 @@
-module github.com/mkozhukh/dsfs
+module github.com/mkozhukh/dsfs/backend
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
@@ -13,6 +13,7 @@ require (
 	github.com/mkozhukh/go-remote v0.0.0-20190313215128-37c2ee42ddb5
 	github.com/mkozhukh/login v0.0.0-20190313211025-5f6af625325d
 	github.com/mkozhukh/roles v0.0.0-20190313122956-c7ff0cf7d1d2
+	github.com/rs/xid v1.2.1
 	github.com/sirupsen/logrus v1.4.0
 	github.com/thedevsaddam/renderer v1.2.0
 	github.com/unrolled/render v1.0.0

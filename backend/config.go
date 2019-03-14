@@ -63,7 +63,3 @@ func (c AppConfig) Load(path string) {
 
 	log.Printf("Serving files from " + Config.Folder)
 }
-
-func (c AppConfig) LoadRoles() {
-
-}

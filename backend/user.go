@@ -6,16 +6,19 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/mkozhukh/go-remote"
 	"github.com/mkozhukh/roles"
+
+	"github.com/mkozhukh/dsfs/backend/store"
 )
 
 const (
 	//CanAdminUser allows to manage users
 	CanAdminUser roles.Right = iota
-	//CanEditData allows to auth app and change data
+	//CanUploadFiles allows to store files
 	CanUploadFiles
 )
 
 var auth = roles.NewRegistry()
+var users *store.UserCollection
 
 type CurrentUser struct {
 	IsOwner bool          `json:"owner"`
@@ -26,8 +29,7 @@ type CurrentUser struct {
 
 func (c *CurrentUser) Load(id uint) {
 	// get full user info from DB
-	user := User{}
-	db.Find(&user, id)
+	user := users.Get(id)
 
 	c.Email = user.Email
 	c.Name = user.Name
@@ -35,30 +37,29 @@ func (c *CurrentUser) Load(id uint) {
 	c.Rights = auth.GetRights(roles.Role(id))
 }
 
-func createDefaultUser(name, email string) *User {
-	user := User{
+func createDefaultUser(name, email string) *store.User {
+	user := store.User{
 		Email:  email,
 		Name:   name,
 		Rights: roles.SerializeRights(CanAdminUser, CanUploadFiles),
 	}
 
-	db.Save(&user)
-	Config.LoadRoles()
+	users.Save(&user)
+	LoadRolesFromDB()
 
 	return &user
 }
 
-func (c *AppConfig) LoadRolesFromDB() {
-	users := make([]User, 0)
-	db.Find(&users)
-
-	for _, user := range users {
+func LoadRolesFromDB() {
+	for _, user := range users.GetAll() {
 		data := roles.ParseRights(user.Rights)
 		auth.RegisterRole(roles.Role(user.ID), data...)
 	}
 }
 
 func initUser(r chi.Router, s *remote.Server) {
+	users, _ = store.NewUserCollection("./users.json")
+
 	// providers for API
 	s.RegisterProvider(func(r *http.Request) *roles.User {
 		return roles.UserFromContext(r.Context())

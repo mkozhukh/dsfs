@@ -29,6 +29,7 @@ github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxv
 github.com/markbates/going v1.0.0/go.mod h1:I6mnB4BPnEeqo85ynXIx1ZFLLbtiLHNXVgWeFO9OGOA=
 github.com/markbates/goth v1.49.0 h1:qQ4Ti4WaqAxNAggOC+4s5M85sMVfMJwQn/Xkp73wfgI=
 github.com/markbates/goth v1.49.0/go.mod h1:zZmAw0Es0Dpm7TT/4AdN14QrkiWLMrrU9Xei1o+/mdA=
+github.com/mkozhukh/dsfs v0.0.0-20170828072802-9c00ad4f0b67 h1:qD1uQWu1gPo5HIGIPiJS0Lk1V3d4PdO47roiaahNe4I=
 github.com/mkozhukh/go-remote v0.0.0-20190313215128-37c2ee42ddb5 h1:g6GdTJydwwJQ4E1sA/KJaDjfoywKv8Ew+jgL7Ls5tgA=
 github.com/mkozhukh/go-remote v0.0.0-20190313215128-37c2ee42ddb5/go.mod h1:wpAttUet2M/TDCPUH1LrNaq7SnLhGuJc00Y/esJozDo=
 github.com/mkozhukh/login v0.0.0-20190313211025-5f6af625325d h1:fYomPMDBFCZ3uY5Oko/ue+jPzcGNPCBftIajD3zKU14=
@@ -37,6 +38,8 @@ github.com/mkozhukh/roles v0.0.0-20190313122956-c7ff0cf7d1d2 h1:cL8iWndSv3ntHc3o
 github.com/mkozhukh/roles v0.0.0-20190313122956-c7ff0cf7d1d2/go.mod h1:lvqkFnRZGWaRYftqOzUeCS1YO2Sl5+HujqlKX1kXSCw=
 github.com/mrjones/oauth v0.0.0-20180629183705-f4e24b6d100c/go.mod h1:skjdDftzkFALcuGzYSklqYd8gvat6F1gZJ4YPVbkZpM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/rs/xid v1.2.1 h1:mhH9Nq+C1fY2l1XIpgxIiUOfNpRBYH1kKcr+qfKgjRc=
+github.com/rs/xid v1.2.1/go.mod h1:+uKXf+4Djp6Md1KODXJxgGQPKngRmWyn10oCKFzNHOQ=
 github.com/sirupsen/logrus v1.4.0 h1:yKenngtzGh+cUSSh6GWbxW2abRqhYUSR/t/6+2QqNvE=
 github.com/sirupsen/logrus v1.4.0/go.mod h1:LxeOpSwHxABJmUn/MG1IvRgCAasNZTLOkJPxbbu5VWo=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
