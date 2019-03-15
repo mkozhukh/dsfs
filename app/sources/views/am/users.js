@@ -1,7 +1,5 @@
-import {JetView} from "webix-jet";
+import {JetView, plugins} from "webix-jet";
 import {data, serverData} from "models/users";
-
-import form from "./uform";
 
 export default class TopView extends JetView{
 	config(){
@@ -15,7 +13,8 @@ export default class TopView extends JetView{
 				height:70, template:"#name#<br>#email#"
 			},
 			on:{
-				onAfterSelect:id => this.show({ id })
+				onselectchange:() => this.aShowForm(),
+				"data->onsyncapply":() => this.aShowForm()
 			}
 		};
 
@@ -23,7 +22,7 @@ export default class TopView extends JetView{
 			view:"button",
 			type:"iconButton",
 			label:"Add New User",
-			icon:"zmdi zmdi-plus",
+			icon:"zmdi zmdi-collection-plus",
 			width:200, click: () => {
 				serverData.save(
 					0,
@@ -38,18 +37,32 @@ export default class TopView extends JetView{
 
 		return { type:"space", cols:[ 
 			{ type:"clean", rows:[ list, addButton ] },
-			form
+			{ $subview:"am.empty", name:"content" }
 		]};
 	}
 	urlChange(){
 		data.waitData.then(() => {
-			const id = this.getParam("id");
-			if (id){
+			const id = this.getParam("userId");
+			const list = this.$$("list");
+			if (id && list.exists(id)){
 				this.$$("list").select(id);
-			} 
+			}
 		}); 
 	}
 	init(){
 		this.$$("list").sync(data);
+		this.use(plugins.UrlParam, ["userId"]);
+	}
+	aShowForm(){
+		const list = this.$$("list");
+		const id = list.getSelectedId();
+
+		if (id === this.aAlreadyShown) return;
+		this.aAlreadyShown = id;
+
+		const page = id ? "am.uform" : "am.empty";
+		
+		this.show({ userId:id },{ silent:true });
+		this.show(page, { target:"content" });
 	}
 }

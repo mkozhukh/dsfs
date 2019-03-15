@@ -21,7 +21,6 @@ export default class TopView extends JetView{
 					webix.confirm(`This will disable access for ${data.getItem(id).name}`).then(() => {
 						serverData.save(id, "delete", {});
 						data.remove(id);
-						this.setParam("id", "", true);
 					});
 				}}
 			]
@@ -50,7 +49,7 @@ export default class TopView extends JetView{
 
 
 		return {
-			view:"form", id:"form", disabled:true, maxWidth:600, rows:[
+			view:"form", id:"form", maxWidth:600, rows:[
 				{ cols:[editors, {}, buttons ] },
 				rightsSelector,
 				{}
@@ -59,14 +58,10 @@ export default class TopView extends JetView{
 	}
 	urlChange(){
 		data.waitData.then(() => {
-			const id = this.getParam("id");
+			const id = this.getParam("userId", true);
 			if (id){
-				this.$$("form").enable();
 				this.$$("form").setValues( data.getItem(id) );
 				this.$$("form").focus();
-			} else {
-				this.$$("form").clear();
-				this.$$("form").disable();
 			}
 		}); 
 	}

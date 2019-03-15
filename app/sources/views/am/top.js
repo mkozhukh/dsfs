@@ -7,8 +7,11 @@ export default class TopView extends JetView{
 
 		const toolbar = {
 			view:"toolbar", css:"webix_dark", padding:{ left: 10, right:10 }, elements:[
-				{ view:"label", label:"Access management" }
+				{ view:"label", label:"Access management" },
 				//{ view:"segmented", options:["Users", "Roles"], width: 320 }
+				{ view:"icon", icon:"zmdi zmdi-fullscreen-exit", tooltip:"Logout", click: () => {
+					document.location.href = "/auth/logout";
+				}},
 			]
 		};
 
