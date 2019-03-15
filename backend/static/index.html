@@ -5,15 +5,18 @@
 	<title>DSF</title>
 	<script type="text/javascript" src="//cdn.webix.com/edge/webix.js"></script>
 	<link rel="stylesheet" type="text/css" href="//cdn.webix.com/edge/webix.css">
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" crossorigin="anonymous">
 	<style type="text/css">
+		.webix_layout_toolbar.webix_toolbar .webix_el_label .webix_el_box{
+			color: #fff;
+			padding-left: 10px;
+			font-weight: normal;
+		}
 		.webix_drop_file {
-			background: #fd8;
+			background: rgb(248, 243, 198);
 		}
-		.webix_drop_file:before{
-			bottom:auto;
-			top:46%;
-			pointer-events: none;
-		}
+
 		.name_part{
 			display:inline-block; 
 			width: 200px;
@@ -22,14 +25,13 @@
 			display: inline-block;
 			margin-left:23px;
 			width: 200px;
-
 		}
 		.card{
 			margin:18px 50px 2px 50px;
 			padding: 10px 20px 10px 20px;
 			border: 1px solid #ddd;
 			background: #f8f8f8;
-			box-shadow: 5px 5px 5px silver;
+			box-shadow: 2px 2px 5px silver;
 			border-radius: 3px;
 		}
 		.webix_list_item{
@@ -78,21 +80,21 @@
 				case "cs":
 				case "php":
 				case "java":
-					return "file-code-o";
+					return "file-code";
 
 				case "zip":
 				case "rar":
 				case "z7":
-					return "file-archive-o";
+					return "file-archive";
 
 				case "jpg":
 				case "png":
 				case "gif":
 				case "jpeg":
-					return "file-archive-o";
+					return "file-archive";
 
 				default:
-					return "file-o";
+					return "file";
 			}
 		}
 
@@ -106,7 +108,7 @@
 			document.execCommand('copy');
 		}
 
-		var header = { view:"toolbar", cols:[
+		var header = { view:"toolbar", css:"webix_dark", cols:[
 			{ view:"label", label:"Dead Simple File Storage", height:40 },
 			{
 				view:"uploader", id:"files", value:"Add File", width:150, upload:"/upload"
@@ -123,7 +125,7 @@
 				height:105,
 				template:`
 			<div class='card'>
-				<div><span class='webix_icon fa-#icon#'>&nbsp;</span> <b class='name_part'>#name#</b><span class='size_part'>#size#</span></div>
+				<div><span class='webix_icon far fa-#icon#'>&nbsp;</span> <b class='name_part'>#name#</b><span class='size_part'>#size#</span></div>
 				<div class='#status#'><span class='progress_part'>Uploading: #percent#%</span><span class='href_part'><button class='clipboard'>To clipboard</button>#href#</span></div>
 			</div>
 			` }

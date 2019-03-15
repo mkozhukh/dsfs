@@ -7,8 +7,8 @@ import (
 	"github.com/jinzhu/configor"
 )
 
-// AppConfig contains app's configuration
-type AppConfig struct {
+// appConfig contains app's configuration
+type appConfig struct {
 	Folder string `default:""`
 	Path   string `default:"30d"`
 
@@ -19,10 +19,9 @@ type AppConfig struct {
 	}
 
 	Server struct {
-		Port       string `default:"8040"`
-		Secret     string `default:"Not-So-Secret"`
-		AdminPath  string `default:"/app/admin"`
-		ClientPath string `default:"/app/client"`
+		Port    string `default:"8040"`
+		Secret  string `default:"Not-So-Secret"`
+		AppPath string `default:"/app/admin"`
 	}
 
 	DB struct {
@@ -36,10 +35,10 @@ type AppConfig struct {
 }
 
 // Config contains global app's configuration
-var Config AppConfig
+var Config appConfig
 
 //Load method loads and parses config file
-func (c AppConfig) Load(path string) {
+func (c appConfig) Load(path string) {
 	if path == "" {
 		if len(os.Args) > 1 {
 			path = os.Args[1]

@@ -10,6 +10,7 @@ import (
 	"github.com/mkozhukh/login"
 	"github.com/mkozhukh/roles"
 
+	"github.com/mkozhukh/dsfs/backend/auth"
 	"github.com/mkozhukh/dsfs/backend/store"
 )
 
@@ -18,16 +19,17 @@ type loginHandler struct {
 }
 
 func (l loginHandler) Login(req *http.Request, res http.ResponseWriter, email string) string {
-	user := users.First(func(u *store.User) bool {
+	user := store.Users.First(func(u *store.User) bool {
 		return u.Email == email
 	})
 
 	// unknown user
 	if user.ID == 0 {
 		if email == Config.Owner {
-			user = createDefaultUser("Admin", Config.Owner)
+			user = auth.CreateOwner("Admin", Config.Owner)
+		} else {
+			return "/denied"
 		}
-		return "/denied"
 	}
 
 	if l.session.Load(req).PutInt(res, "userID", int(user.ID)) != nil {
@@ -35,13 +37,13 @@ func (l loginHandler) Login(req *http.Request, res http.ResponseWriter, email st
 		return "/denied"
 	}
 
-	return "/admin"
+	return "/"
 }
 
 func (l loginHandler) Logout(req *http.Request, res http.ResponseWriter) string {
 	if l.session.Load(req).Remove(res, "userID") != nil {
 		log.Print("Can't delete auth info from session")
-		return "/admin"
+		return "/"
 	}
 
 	return "/"
@@ -52,7 +54,7 @@ func initLogin(r chi.Router, session *scs.Manager) {
 	r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			userID, _ := session.Load(r).GetInt("userID")
-			user := auth.NewUser(uint(userID), roles.Role(userID))
+			user := auth.Registry.NewUser(uint(userID), roles.Role(userID))
 			ctx := roles.UserToContext(r.Context(), user)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})

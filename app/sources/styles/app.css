@@ -1,0 +1,39 @@
+.webixappstart{
+    opacity:0;
+}
+.webixapp{
+    transition: opacity 500ms;
+    opacity: 1;
+}
+
+/*data loading status*/
+.status_good, .status_error, .status_saving{
+	text-align: center;
+	margin-left:-12px;
+}
+.status_error{
+	color:red;
+}
+.status_good{
+	color:green;
+}
+
+/* sync status */
+.status_good{
+	color:#ddd;
+}
+
+/* common material elements */
+.webix_view.white_bg{
+	background: white;
+}
+
+.hover_icon_button{
+	float:right;
+	color: #ccc;
+}
+
+.hover_icon_button:hover{
+	float:right;
+	color: #1CA1C1;
+}

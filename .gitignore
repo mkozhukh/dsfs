@@ -6,3 +6,7 @@ node_modules
 
 backend/backend
 backend/config.yml
+backend/data
+
+app/codebase/app.js
+app/codebase/app.css
