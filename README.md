@@ -1,5 +1,8 @@
+Not maintained project
+Active development has moved to https://git.webix.io/Servers/dsfs
+
 Dead Simple File Storage
-=========================
+----
 
 File storage for temporary files.
 
